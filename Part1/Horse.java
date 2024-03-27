@@ -1,77 +1,125 @@
 package OOP.HorseRaceSimulator.Part1;
 
 /**
- * Write a description of class Horse here.
+ * The Horse class represents a horse participating in a race.
+ * It stores information such as the horse's name, symbol, distance traveled, 
+ * fall status, and confidence rating.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Taher Ahmed
+ * @version 1 (27/03/2024)
  */
-public class Horse
-{
-    //Fields of class Horse
-    
-    
-      
-    //Constructor of class Horse
+public class Horse {
+    // Fields of class Horse
+    private String name;
+    private char symbol;
+    private int distanceTravelled;
+    private boolean fallen;
+    private double confidence;
+
+    // Constructor of class Horse
     /**
-     * Constructor for objects of class Horse
+     * Constructor for objects of class Horse.
+     * 
+     * @param horseSymbol The character used to represent the horse.
+     * @param horseName The name of the horse.
+     * @param horseConfidence The confidence rating of the horse (between 0 and 1).
      */
-    public Horse(char horseSymbol, String horseName, double horseConfidence)
-    {
-       
-    }
-    
-    
-    
-    //Other methods of class Horse
-    public void fall()
-    {
-        
-    }
-    
-    public double getConfidence()
-    {
-        
-    }
-    
-    public int getDistanceTravelled()
-    {
-        
-    }
-    
-    public String getName()
-    {
-        
-    }
-    
-    public char getSymbol()
-    {
-        
-    }
-    
-    public void goBackToStart()
-    {
-        
-    }
-    
-    public boolean hasFallen()
-    {
-        
+    public Horse(char horseSymbol, String horseName, double horseConfidence) {
+        symbol = horseSymbol;
+        name = horseName;
+        distanceTravelled = 0;
+        fallen = false;
+        setConfidence(horseConfidence); // Ensure confidence is within the valid range
     }
 
-    public void moveForward()
-    {
-        
+    // Other methods of class Horse
+
+    /**
+     * Sets the horse as fallen.
+     */
+    public void fall() {
+        fallen = true;
     }
 
-    public void setConfidence(double newConfidence)
-    {
-        
+    /**
+     * Returns the confidence rating of the horse.
+     * 
+     * @return The confidence rating of the horse.
+     */
+    public double getConfidence() {
+        return confidence;
     }
-    
-    public void setSymbol(char newSymbol)
-    {
-        
+
+    /**
+     * Returns the distance traveled by the horse.
+     * 
+     * @return The distance traveled by the horse.
+     */
+    public int getDistanceTravelled() {
+        return distanceTravelled;
     }
-    
+
+    /**
+     * Returns the name of the horse.
+     * 
+     * @return The name of the horse.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the character used to represent the horse.
+     * 
+     * @return The character used to represent the horse.
+     */
+    public char getSymbol() {
+        return symbol;
+    }
+
+    /**
+     * Resets the horse to the start of the race.
+     */
+    public void goBackToStart() {
+        distanceTravelled = 0;
+        fallen = false;
+    }
+
+    /**
+     * Returns true if the horse has fallen, false otherwise.
+     * 
+     * @return True if the horse has fallen, false otherwise.
+     */
+    public boolean hasFallen() {
+        return fallen;
+    }
+
+    /**
+     * Increments the distance traveled by the horse by 1.
+     */
+    public void moveForward() {
+        distanceTravelled++;
+    }
+
+    /**
+     * Sets the confidence rating of the horse to the given value.
+     * 
+     * @param newConfidence The new confidence rating of the horse.
+     */
+    public void setConfidence(double newConfidence) {
+        if (newConfidence >= 0 && newConfidence <= 1) {
+            confidence = newConfidence;
+        } else {
+            System.out.println("Error: Confidence rating must be between 0 and 1.");
+        }
+    }
+
+    /**
+     * Sets the character used to represent the horse to the given character.
+     * 
+     * @param newSymbol The new character used to represent the horse.
+     */
+    public void setSymbol(char newSymbol) {
+        symbol = newSymbol;
+    }
 }
