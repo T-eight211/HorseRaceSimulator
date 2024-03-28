@@ -1,8 +1,7 @@
 package Part1;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import OOP.HorseRaceSimulator.Part1.Horse;
-
 import java.lang.Math;
 
 /**
@@ -69,33 +68,48 @@ public class Race
     public void startRace()
     {
         //declare a local variable to tell us when the race is finished
-        boolean finished = false;
-        
+        boolean finished = false;     
         //reset all the lanes (all horses not fallen and back to 0). 
         lane1Horse.goBackToStart();
         lane2Horse.goBackToStart();
         lane3Horse.goBackToStart();
-                      
+        List<Horse> winners = new ArrayList<>();                   
         while (!finished)
         {
             //move each horse
             moveHorse(lane1Horse);
             moveHorse(lane2Horse);
-            moveHorse(lane3Horse);
-                        
-            //print the race positions
-            printRace();
-            
-            //if any of the three horses has won the race is finished
-            if ( raceWonBy(lane1Horse) || raceWonBy(lane2Horse) || raceWonBy(lane3Horse) )
+            moveHorse(lane3Horse);                  
+
+             //if any of the three horses has won the race is finished
+            if (raceWonBy(lane1Horse) || raceWonBy(lane2Horse) || raceWonBy(lane3Horse))
             {
                 finished = true;
+                if (raceWonBy(lane1Horse)) {
+                    winners.add(lane1Horse);
+                    lane1Horse.setConfidence(Math.round((lane1Horse.getConfidence()+0.1)*10.0)/10.0);
+                }
+                if (raceWonBy(lane2Horse)) {
+                    winners.add(lane2Horse);
+                    lane2Horse.setConfidence(Math.round((lane2Horse.getConfidence()+0.1)*10.0)/10.0);
+                }
+                if (raceWonBy(lane3Horse)) {
+                    winners.add(lane3Horse);
+                    lane3Horse.setConfidence(Math.round((lane3Horse.getConfidence()+0.1)*10.0)/10.0);
+                }
             }
-           
+            //print the race positions
+            printRace();
+
             //wait for 100 milliseconds
             try{ 
                 TimeUnit.MILLISECONDS.sleep(100);
             }catch(Exception e){}
+        }
+        // Output the winner
+        System.out.println("And the winner(s) is/are:");
+        for (Horse winner : winners) {
+            System.out.println(winner.getName());
         }
     }
     
@@ -125,6 +139,7 @@ public class Race
             if (Math.random() < (0.1*theHorse.getConfidence()*theHorse.getConfidence()))
             {
                 theHorse.fall();
+                theHorse.setConfidence(Math.round((theHorse.getConfidence()-0.1)*10.0)/10.0);
             }
         }
     }
@@ -152,7 +167,9 @@ public class Race
      */
     private void printRace()
     {
-        System.out.print('\u000C');  //clear the terminal window
+        
+        System.out.print("\u001B[2J");  //clear the terminal window
+        System.out.print("\u001B[H");   //move the cursor to the top left corner
         
         multiplePrint('=',raceLength+3); //top edge of track
         System.out.println();
@@ -193,7 +210,7 @@ public class Race
         //else print the horse's symbol
         if(theHorse.hasFallen())
         {
-            System.out.print('\u2322');
+            System.out.print("\u001B[34mx");
         }
         else
         {
@@ -202,9 +219,14 @@ public class Race
         
         //print the spaces after the horse
         multiplePrint(' ',spacesAfter);
-        
+
+    
         //print the | for the end of the track
-        System.out.print('|');
+        System.out.print("\u001B[0m|"); 
+
+        // print the horse name and confidence level
+        System.out.print("  " + theHorse.getName() + " (Current confidence " + theHorse.getConfidence() + ")");
+
     }
         
     
@@ -223,4 +245,16 @@ public class Race
             i = i + 1;
         }
     }
+
+    public static void main(String[] args) {
+        Race race = new Race(10);
+        Horse horse1 = new Horse('♘',"Taher", 0.6);
+        Horse horse2 = new Horse('♕',"Taif", 0.5);
+        Horse horse3 = new Horse('♘',"Zidan", 0.4);
+        race.addHorse(horse1, 1);
+        race.addHorse(horse2, 2);
+        race.addHorse(horse3, 3);
+        race.startRace();
+    }
+
 }

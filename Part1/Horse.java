@@ -1,12 +1,10 @@
-package OOP.HorseRaceSimulator.Part1;
+package Part1;
 
 /**
- * The Horse class represents a horse participating in a race.
- * It stores information such as the horse's name, symbol, distance traveled, 
- * fall status, and confidence rating.
+ * Write a description of class Horse here.
  * 
- * @author Taher Ahmed
- * @version 1 (27/03/2024)
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Horse {
     // Fields of class Horse
