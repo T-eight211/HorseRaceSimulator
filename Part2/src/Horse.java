@@ -14,7 +14,6 @@ public class Horse {
     private int distanceTravelled;
     private boolean fallen;
     private double confidence;
-
     // Constructor of class Horse
     /**
      * Constructor for objects of class Horse.
@@ -114,9 +113,8 @@ public class Horse {
     public void setConfidence(double newConfidence) {
         if (newConfidence >= 0 && newConfidence <= 1) {
             confidence = newConfidence;
-        }
+        } 
     }
-
     /**
      * Sets the character used to represent the horse to the given character.
      * 
@@ -126,15 +124,11 @@ public class Horse {
         type = newType;
     }
 
-    // setter for colour
     public void setColour(String newColour) {
         colour = newColour;
     }
 
-    // setter for name
     public void setName(String newName) {
         name = newName;
-    }
-
-    
+    }  
 }
