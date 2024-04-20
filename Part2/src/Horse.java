@@ -114,8 +114,6 @@ public class Horse {
     public void setConfidence(double newConfidence) {
         if (newConfidence >= 0 && newConfidence <= 1) {
             confidence = newConfidence;
-        } else {
-            System.out.println("Error: Confidence rating must be between 0 and 1.");
         }
     }
 

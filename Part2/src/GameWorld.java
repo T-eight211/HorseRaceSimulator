@@ -52,7 +52,7 @@ public class GameWorld {
     gbc3.gridy = 0;
     
     innerPanel3.add(chooseTrackLengthsLabel , gbc3);
-    JSpinner trackLengthsSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 100, 1));
+    JSpinner trackLengthsSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 20, 1));
     JSpinner.NumberEditor editor2 = new JSpinner.NumberEditor(trackLengthsSpinner, "#");
     trackLengthsSpinner.setEditor(editor2);
     editor2.getTextField().setEnabled(false);
@@ -73,7 +73,6 @@ public class GameWorld {
     nextButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-          // Get the selected track length
           int trackLength = (int) trackLengthsSpinner.getValue();
           int numberOfTracks = (int) numberOfTracksSpinner.getValue();
           race = new Race(trackLength);
@@ -98,14 +97,11 @@ public class GameWorld {
             getHorseInfo(count+1);
           }
           else {
-            System.out.println("All horses have been created");
-            
             Background.panel.setLayout(null);
             nextButton1.setEnabled(false);
             Background.panel.removeAll();
             Background.panel.revalidate();
             Background.panel.repaint();
-
             race.startRace();
             
           }
@@ -127,15 +123,17 @@ public class GameWorld {
     ImageIcon imageIcon = new ImageIcon("resources/" + horse.getColour() + "-" + horse.getType() + "-image.png");
     JLabel imageLabel;
     if (horse.hasFallen()) {
-      imageLabel = horseLabelMap.get(horse);
-      int xPositionx = imageLabel.getX();
-      int yPositionx = imageLabel.getY();
-      Background.panel.remove(imageLabel);
-      JLabel xLabel = new JLabel("X");
-      xLabel.setBounds(xPositionx, yPositionx, 60, 60); 
-      Background.panel.add(xLabel);
-
-
+      
+      if ( horseLabelMap.containsKey(horse)) {
+        imageLabel = horseLabelMap.get(horse);
+        int xPositionx = imageLabel.getX();
+        int yPositionx = imageLabel.getY();
+        Background.panel.remove(imageLabel);
+        ImageIcon xIcon = new ImageIcon("resources/cross-image-2.png");
+        JLabel imageLabel2 = new JLabel(xIcon);
+        imageLabel2.setBounds(xPositionx, yPositionx, 60, 60); 
+        Background.panel.add(imageLabel2);  
+      }
     }
     else {
      
@@ -156,7 +154,6 @@ public class GameWorld {
       int count2 = 0;
       for (Horse winner: race.getWinners()) {
         JLabel winnerLabel = new JLabel("Winner: " + winner.getName());
-        System.out.println("Winner: " + winner.getName());
         winnerLabel.setBounds (566, 600 + 25*count2, 200, 25);
         count2++;
         Background.panel.add(winnerLabel);
@@ -184,20 +181,12 @@ public class GameWorld {
         Background.panel.add(nameLabel);
       
     }
-
-
-   
-    System.out.println("Repainting");
-    
     Background.panel.revalidate();
     Background.panel.repaint();
-    
-    
   }
 
   public static double calculateXPosition (Horse horse){
     double xPosition = (((1131.0 / (race.getRaceLength() + 1)) * horse.getDistanceTravelled()) + ((1131.0 / (race.getRaceLength() + 1)) * (horse.getDistanceTravelled() + 1))) / 2.0 - 30;
-    System.out.println("xPosition: " + xPosition);
     if (xPosition < 0) {
       xPosition = 0;
     } 

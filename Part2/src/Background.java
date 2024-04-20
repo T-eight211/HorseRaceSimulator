@@ -7,7 +7,7 @@ public class Background {
 
     private static ImageIcon backgroundImage;
     static JPanel panel;
-    private static JPanel innerPanel1; // Declare class-level innerPanel1 variable
+    private static JPanel innerPanel1; 
     static JTextField horseNameField;
 
     public void setBackground(JFrame frame) {
@@ -16,7 +16,6 @@ public class Background {
         backgroundImage = new ImageIcon(backgroundImageFilePath);
         int width = backgroundImage.getIconWidth();
         int height = backgroundImage.getIconHeight();
-        System.out.println("Width: " + width + ", Height: " + height);
         frame.setSize(width, height+20);
         frame.setLayout(new BorderLayout());
 
@@ -38,7 +37,7 @@ public class Background {
           panel.add(emptyPanel);
         }
 
-        innerPanel1 = new JPanel(new GridBagLayout()); // Initialize class-level innerPanel1
+        innerPanel1 = new JPanel(new GridBagLayout()); 
         innerPanel1.setOpaque(false);
         GridBagConstraints gbc1 = new GridBagConstraints();
         JLabel chooseTrackDesignLabel = new JLabel("Choose track design:");
@@ -52,7 +51,7 @@ public class Background {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedDesign = (String) trackDesignDropdown.getSelectedItem();
-                // Change background image based on selection
+            
                 switch (selectedDesign) {
                     case "Desert":
                         setBackgroundImage("resources/race-track-image-1.png");
@@ -78,16 +77,13 @@ public class Background {
         panel.repaint(); 
     }
 
-    public static void editPanel1(int horseNumber) {
-        
+    public static void editPanel1(int horseNumber) {      
         innerPanel1.removeAll();
-        System.out.println("Horse number: " + horseNumber);
         JLabel label = new JLabel("Horse " + horseNumber+ " name:");
         GridBagConstraints gbc2 = new GridBagConstraints();
         gbc2.gridx = 0;
         gbc2.gridy = 0;
         innerPanel1.add(label, gbc2);
-        // add an input field for the horse name
         horseNameField = new JTextField(10);
         gbc2.gridx = 0;
         gbc2.gridy = 1;

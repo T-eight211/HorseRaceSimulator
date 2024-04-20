@@ -106,11 +106,6 @@ public class Race
             }
             
         }
-        
-        System.out.println("And the winner(s) is/are:");
-        for (Horse winner : winners) {
-            System.out.println(winner.getName());
-        }
     }
     
     /**
