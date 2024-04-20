@@ -22,11 +22,9 @@ public class Race
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(int distance)
-    {
+    public Race(int distance){
         raceLength = distance;
-        horses = new ArrayList<>();
-        
+        horses = new ArrayList<>();     
     }
 
     // get winners
@@ -55,8 +53,6 @@ public class Race
     public List<Horse> getFallenHorses() {
         return fallenHorses;
     }
-
-
     
     /**
      * Start the race
@@ -66,25 +62,21 @@ public class Race
      */
     public void startRace()
     {
-   
+
         for (Horse horse : horses) {
             horse.goBackToStart();
         }
-        
         boolean finished = false;
-        
         
         while (!finished)
         {
-           
-            
+             
             for (Horse horse : horses) {
                 moveHorse(horse);
                 if (horse.hasFallen() && !fallenHorses.contains(horse)) {
                     fallenHorses.add(horse);
                 }
-                
-                // or if the horse has won 
+
                 if (raceWonBy(horse)){
                     finished = true;
                     winners.add(horse);
@@ -97,7 +89,6 @@ public class Race
                 GameWorld.printRace(horse);
             }
             
-            
             // Wait for 100 milliseconds
             try {
                 TimeUnit.MILLISECONDS.sleep(1000);
@@ -106,13 +97,9 @@ public class Race
             }
             
         }
-        
-        System.out.println("And the winner(s) is/are:");
-        for (Horse winner : winners) {
-            System.out.println(winner.getName());
-        }
+     
     }
-    
+  
     /**
      * Randomly make a horse move forward or fall depending
      * on its confidence rating
@@ -123,6 +110,7 @@ public class Race
     private void moveHorse(Horse theHorse)
     {
         if (!theHorse.hasFallen()) {
+
             if (Math.random() < theHorse.getConfidence()) {
                theHorse.moveForward();
             }

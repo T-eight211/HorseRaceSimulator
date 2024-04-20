@@ -4,32 +4,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Background {
-
     private static ImageIcon backgroundImage;
     static JPanel panel;
     private static JPanel innerPanel1; // Declare class-level innerPanel1 variable
     static JTextField horseNameField;
 
-    public void setBackground(JFrame frame) {
-        
+    public void setBackground(JFrame frame) {   
         String backgroundImageFilePath = "resources/race-track-image-1.png";
         backgroundImage = new ImageIcon(backgroundImageFilePath);
         int width = backgroundImage.getIconWidth();
         int height = backgroundImage.getIconHeight();
-        System.out.println("Width: " + width + ", Height: " + height);
         frame.setSize(width, height+20);
         frame.setLayout(new BorderLayout());
-
         panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+
                 if (backgroundImage != null) {
                     g.drawImage(backgroundImage.getImage(), 0, 0, this);
                 }
             }
         };
-
         panel.setLayout(new GridLayout(4, 4));
 
         for (int i = 0; i < 12; i++) {
@@ -37,7 +33,6 @@ public class Background {
           emptyPanel.setOpaque(false);
           panel.add(emptyPanel);
         }
-
         innerPanel1 = new JPanel(new GridBagLayout()); // Initialize class-level innerPanel1
         innerPanel1.setOpaque(false);
         GridBagConstraints gbc1 = new GridBagConstraints();
@@ -52,7 +47,6 @@ public class Background {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedDesign = (String) trackDesignDropdown.getSelectedItem();
-                // Change background image based on selection
                 switch (selectedDesign) {
                     case "Desert":
                         setBackgroundImage("resources/race-track-image-1.png");
@@ -70,7 +64,6 @@ public class Background {
         gbc1.gridy = 1;
         innerPanel1.add(trackDesignDropdown, gbc1);
         panel.add(innerPanel1);
-        
     }
 
     private static void setBackgroundImage(String imagePath) {
@@ -78,16 +71,13 @@ public class Background {
         panel.repaint(); 
     }
 
-    public static void editPanel1(int horseNumber) {
-        
+    public static void editPanel1(int horseNumber) { 
         innerPanel1.removeAll();
-        System.out.println("Horse number: " + horseNumber);
         JLabel label = new JLabel("Horse " + horseNumber+ " name:");
         GridBagConstraints gbc2 = new GridBagConstraints();
         gbc2.gridx = 0;
         gbc2.gridy = 0;
         innerPanel1.add(label, gbc2);
-        // add an input field for the horse name
         horseNameField = new JTextField(10);
         gbc2.gridx = 0;
         gbc2.gridy = 1;
