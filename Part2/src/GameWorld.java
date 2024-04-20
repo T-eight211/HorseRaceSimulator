@@ -51,7 +51,7 @@ public class GameWorld {
     gbc3.gridx = 0;
     gbc3.gridy = 1;
     innerPanel3.add(trackLengthsSpinner , gbc3);
-    Background.panel.add(innerPanel3)
+    Background.panel.add(innerPanel3);
     innerPanel4 = new JPanel(new GridBagLayout());
     innerPanel4.setOpaque(false);
     GridBagConstraints gbc4 = new GridBagConstraints();
