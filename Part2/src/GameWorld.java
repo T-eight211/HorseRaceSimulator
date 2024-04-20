@@ -44,7 +44,7 @@ public class GameWorld {
     gbc3.gridx = 0;
     gbc3.gridy = 0;   
     innerPanel3.add(chooseTrackLengthsLabel , gbc3);
-    JSpinner trackLengthsSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 100, 1));
+    JSpinner trackLengthsSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 20, 1));
     JSpinner.NumberEditor editor2 = new JSpinner.NumberEditor(trackLengthsSpinner, "#");
     trackLengthsSpinner.setEditor(editor2);
     editor2.getTextField().setEnabled(false);
@@ -123,6 +123,18 @@ public class GameWorld {
         imageLabel2.setBounds(xPositionx, yPositionx, 60, 60); 
         Background.panel.add(imageLabel2);  
       }
+    if (horse.hasFallen()) {
+      
+      if ( horseLabelMap.containsKey(horse)) {
+        imageLabel = horseLabelMap.get(horse);
+        int xPositionx = imageLabel.getX();
+        int yPositionx = imageLabel.getY();
+        Background.panel.remove(imageLabel);
+        ImageIcon xIcon = new ImageIcon("resources/cross-image-2.png");
+        JLabel imageLabel2 = new JLabel(xIcon);
+        imageLabel2.setBounds(xPositionx, yPositionx, 60, 60); 
+        Background.panel.add(imageLabel2);  
+      }
     }
 
     else {
@@ -171,6 +183,9 @@ public class GameWorld {
         nameLabelMap.put(horse, nameLabel);
         Background.panel.add(nameLabel); 
     }    
+        Background.panel.add(nameLabel);
+      
+    }
     Background.panel.revalidate();
     Background.panel.repaint();
   }

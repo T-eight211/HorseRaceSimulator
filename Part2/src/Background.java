@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class Background {
     private static ImageIcon backgroundImage;
     static JPanel panel;
-    private static JPanel innerPanel1; // Declare class-level innerPanel1 variable
+    private static JPanel innerPanel1; 
     static JTextField horseNameField;
 
     public void setBackground(JFrame frame) {   
