@@ -16,7 +16,8 @@ public class Background {
         backgroundImage = new ImageIcon(backgroundImageFilePath);
         int width = backgroundImage.getIconWidth();
         int height = backgroundImage.getIconHeight();
-        frame.setSize(width, height);
+        System.out.println("Width: " + width + ", Height: " + height);
+        frame.setSize(width, height+20);
         frame.setLayout(new BorderLayout());
 
         panel = new JPanel() {

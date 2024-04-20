@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+
+import java.lang.Math;
 
 public class GameWorld {
 
@@ -14,6 +18,8 @@ public class GameWorld {
   public static JComboBox<String> colorDropdown;
   public static JComboBox<String> horseTypeDropdown;
   public static int count = 0;
+  private static Map<Horse, JLabel> horseLabelMap = new HashMap<>();
+  private static Map<Horse, JLabel> nameLabelMap = new HashMap<>();
 
   public void addComponents(JFrame frame) {
     Background background = new Background();
@@ -69,16 +75,11 @@ public class GameWorld {
       public void actionPerformed(ActionEvent e) {
           // Get the selected track length
           int trackLength = (int) trackLengthsSpinner.getValue();
-
-          // Get the number of tracks
           int numberOfTracks = (int) numberOfTracksSpinner.getValue();
-
-          // Create a Race object with the selected track length
           race = new Race(trackLength);
-
-          // Create Horse objects based on the number of tracks
+  
           for (int i = 0; i < numberOfTracks; i++) {
-              Horse horse = new Horse(0.6); // You need to implement the Horse class
+              Horse horse = new Horse(0.6); 
               race.addHorse(horse);
           } 
 
@@ -98,19 +99,116 @@ public class GameWorld {
           }
           else {
             System.out.println("All horses have been created");
-            // disable next button
+            
+            Background.panel.setLayout(null);
             nextButton1.setEnabled(false);
+            Background.panel.removeAll();
+            Background.panel.revalidate();
+            Background.panel.repaint();
+
+            race.startRace();
+            
           }
+          
           
         }
       }); 
     }
     
-
-  
-      
-
   }
+
+  public static void printRace(Horse horse) {
+    
+    double xPosition = calculateXPosition(horse);
+    double yPosition = calculateYPosition(horse);
+    int xPositionInt = (int) Math.round(xPosition);
+    int yPositionInt = (int) Math.round(yPosition);
+
+    ImageIcon imageIcon = new ImageIcon("resources/" + horse.getColour() + "-" + horse.getType() + "-image.png");
+    JLabel imageLabel;
+    if (horse.hasFallen()) {
+      imageLabel = horseLabelMap.get(horse);
+      int xPositionx = imageLabel.getX();
+      int yPositionx = imageLabel.getY();
+      Background.panel.remove(imageLabel);
+      JLabel xLabel = new JLabel("X");
+      xLabel.setBounds(xPositionx, yPositionx, 60, 60); 
+      Background.panel.add(xLabel);
+
+
+    }
+    else {
+     
+      if (horseLabelMap.containsKey(horse)) {
+        imageLabel = horseLabelMap.get(horse);
+        imageLabel.setBounds(xPositionInt, yPositionInt, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+      } else {
+          imageLabel = new JLabel(imageIcon);
+          imageLabel.setBounds(xPositionInt, yPositionInt, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+          horseLabelMap.put(horse, imageLabel);
+          Background.panel.add(imageLabel);
+      
+      }
+
+    }
+
+    if (race.raceWonBy(horse)) {
+      int count2 = 0;
+      for (Horse winner: race.getWinners()) {
+        JLabel winnerLabel = new JLabel("Winner: " + winner.getName());
+        System.out.println("Winner: " + winner.getName());
+        winnerLabel.setBounds (566, 600 + 25*count2, 200, 25);
+        count2++;
+        Background.panel.add(winnerLabel);
+    
+      }  
+    }
+
+    else if (race.getFallenHorses().size() == race.getHorses().size()){
+      JLabel fallenLabel = new JLabel("All horses have fallen");
+      fallenLabel.setBounds(566, 600, 200, 25);
+      Background.panel.add(fallenLabel);
+     
+    }
+    
+
+    JLabel nameLabel;
+    if (nameLabelMap.containsKey(horse)) {
+        nameLabel = nameLabelMap.get(horse);
+        nameLabel.setText(horse.getName() + " (" + horse.getConfidence() + ")" + " is dead " + horse.hasFallen());
+        
+    } else {
+        nameLabel = new JLabel(horse.getName() + " (" + horse.getConfidence() + ")" + "is dead" + horse.hasFallen());
+        nameLabel.setBounds(0, 600 + 25 * race.getHorses().indexOf(horse), 200, 25);
+        nameLabelMap.put(horse, nameLabel);
+        Background.panel.add(nameLabel);
+      
+    }
+
+
+   
+    System.out.println("Repainting");
+    
+    Background.panel.revalidate();
+    Background.panel.repaint();
+    
+    
+  }
+
+  public static double calculateXPosition (Horse horse){
+    double xPosition = (((1131.0 / (race.getRaceLength() + 1)) * horse.getDistanceTravelled()) + ((1131.0 / (race.getRaceLength() + 1)) * (horse.getDistanceTravelled() + 1))) / 2.0 - 30;
+    System.out.println("xPosition: " + xPosition);
+    if (xPosition < 0) {
+      xPosition = 0;
+    } 
+    return xPosition;
+  }
+
+  public static double calculateYPosition (Horse horse){
+    double yPosition = (((double)(((800/4)*3)/(race.getHorses().size())) * race.getHorses().indexOf(horse) + ((double)(((800/4)*3)/(race.getHorses().size())) * (race.getHorses().indexOf(horse) + 1))) / 2.0) - 30;
+    return yPosition;
+  }
+
 
   public static void getHorseInfo (int horseNumber){
     Background.editPanel1(horseNumber);
@@ -135,8 +233,6 @@ public class GameWorld {
     gbc5.gridx = 0;
     gbc5.gridy = 0;
     panel.add(label, gbc5);
-
-    //  add a dropdown menu with values Black and white
     String[] colors = {"Black", "White"};
     colorDropdown = new JComboBox<>(colors);
     gbc5.gridx = 0;
@@ -153,7 +249,7 @@ public class GameWorld {
     gbc6.gridx = 0;
     gbc6.gridy = 0;
     panel.add(label, gbc6);
-    String[] horseType = {"Pawn", "Knight", "Bishop", "Rook", "Queen", "King", "Horse"};
+    String[] horseType = {"Pawn", "Knight", "Bishop", "Rook", "Queen", "King"};
     horseTypeDropdown = new JComboBox<>(horseType);
     gbc6.gridx = 0;
     gbc6.gridy = 1;
