@@ -33,7 +33,7 @@ public class Background {
           emptyPanel.setOpaque(false);
           panel.add(emptyPanel);
         }
-        innerPanel1 = new JPanel(new GridBagLayout()); // Initialize class-level innerPanel1
+        innerPanel1 = new JPanel(new GridBagLayout()); 
         innerPanel1.setOpaque(false);
         GridBagConstraints gbc1 = new GridBagConstraints();
         JLabel chooseTrackDesignLabel = new JLabel("Choose track design:");
@@ -47,6 +47,7 @@ public class Background {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedDesign = (String) trackDesignDropdown.getSelectedItem();
+        
                 switch (selectedDesign) {
                     case "Desert":
                         setBackgroundImage("resources/race-track-image-1.png");
@@ -63,15 +64,14 @@ public class Background {
         gbc1.gridx = 0;
         gbc1.gridy = 1;
         innerPanel1.add(trackDesignDropdown, gbc1);
-        panel.add(innerPanel1);
+        panel.add(innerPanel1);   
     }
-
     private static void setBackgroundImage(String imagePath) {
         backgroundImage = new ImageIcon(imagePath);
         panel.repaint(); 
     }
 
-    public static void editPanel1(int horseNumber) { 
+    public static void editPanel1(int horseNumber) {      
         innerPanel1.removeAll();
         JLabel label = new JLabel("Horse " + horseNumber+ " name:");
         GridBagConstraints gbc2 = new GridBagConstraints();

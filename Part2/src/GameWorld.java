@@ -42,7 +42,7 @@ public class GameWorld {
     GridBagConstraints gbc3 = new GridBagConstraints();
     chooseTrackLengthsLabel = new JLabel("Choose track lengths:");
     gbc3.gridx = 0;
-    gbc3.gridy = 0;   
+    gbc3.gridy = 0;  
     innerPanel3.add(chooseTrackLengthsLabel , gbc3);
     JSpinner trackLengthsSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 20, 1));
     JSpinner.NumberEditor editor2 = new JSpinner.NumberEditor(trackLengthsSpinner, "#");
@@ -72,13 +72,14 @@ public class GameWorld {
               Horse horse = new Horse(0.6); 
               race.addHorse(horse);
           } 
-
           getHorseInfo(1); 
       }
     });
 
     if (nextButton1 != null) {
+
       nextButton1.addActionListener(new ActionListener() {
+
         public void actionPerformed(ActionEvent e) {
           race.getHorses().get(count).setName( Background.horseNameField.getText());
           race.getHorses().get(count).setColour(colorDropdown.getSelectedItem().toString());
@@ -88,7 +89,7 @@ public class GameWorld {
           if (count < race.getHorses().size()){
             getHorseInfo(count+1);
           }
-
+          
           else {
             Background.panel.setLayout(null);
             nextButton1.setEnabled(false);
@@ -96,11 +97,10 @@ public class GameWorld {
             Background.panel.revalidate();
             Background.panel.repaint();
             race.startRace();
-          }
+          } 
         }
       }); 
-    }
-    
+    }   
   }
 
   public static void printRace(Horse horse) {  
@@ -111,18 +111,6 @@ public class GameWorld {
     ImageIcon imageIcon = new ImageIcon("resources/" + horse.getColour() + "-" + horse.getType() + "-image.png");
     JLabel imageLabel;
 
-    if (horse.hasFallen()) { 
-
-      if ( horseLabelMap.containsKey(horse)) {
-        imageLabel = horseLabelMap.get(horse);
-        int xPositionx = imageLabel.getX();
-        int yPositionx = imageLabel.getY();
-        Background.panel.remove(imageLabel);
-        ImageIcon xIcon = new ImageIcon("resources/cross-image-2.png");
-        JLabel imageLabel2 = new JLabel(xIcon);
-        imageLabel2.setBounds(xPositionx, yPositionx, 60, 60); 
-        Background.panel.add(imageLabel2);  
-      }
     if (horse.hasFallen()) {
       
       if ( horseLabelMap.containsKey(horse)) {
@@ -136,7 +124,7 @@ public class GameWorld {
         Background.panel.add(imageLabel2);  
       }
     }
-
+    
     else {
      
       if (horseLabelMap.containsKey(horse)) {
@@ -145,11 +133,10 @@ public class GameWorld {
       } 
       
       else {
-        imageLabel = new JLabel(imageIcon);
-        imageLabel.setBounds(xPositionInt, yPositionInt, imageIcon.getIconWidth(), imageIcon.getIconHeight());
-        horseLabelMap.put(horse, imageLabel);
-        Background.panel.add(imageLabel);
-      
+          imageLabel = new JLabel(imageIcon);
+          imageLabel.setBounds(xPositionInt, yPositionInt, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+          horseLabelMap.put(horse, imageLabel);
+          Background.panel.add(imageLabel);
       }
     }
 
@@ -169,22 +156,17 @@ public class GameWorld {
       fallenLabel.setBounds(566, 600, 200, 25);
       Background.panel.add(fallenLabel);
     }
-
     JLabel nameLabel;
-
     if (nameLabelMap.containsKey(horse)) {
         nameLabel = nameLabelMap.get(horse);
-        nameLabel.setText(horse.getName() + " (" + horse.getConfidence() + ")" + " is dead " + horse.hasFallen());  
+        nameLabel.setText(horse.getName() + " (" + horse.getConfidence() + ")" + " is dead " + horse.hasFallen());   
     } 
     
     else {
         nameLabel = new JLabel(horse.getName() + " (" + horse.getConfidence() + ")" + "is dead" + horse.hasFallen());
         nameLabel.setBounds(0, 600 + 25 * race.getHorses().indexOf(horse), 200, 25);
         nameLabelMap.put(horse, nameLabel);
-        Background.panel.add(nameLabel); 
-    }    
-        Background.panel.add(nameLabel);
-      
+        Background.panel.add(nameLabel);  
     }
     Background.panel.revalidate();
     Background.panel.repaint();
@@ -192,7 +174,7 @@ public class GameWorld {
 
   public static double calculateXPosition (Horse horse){
     double xPosition = (((1131.0 / (race.getRaceLength() + 1)) * horse.getDistanceTravelled()) + ((1131.0 / (race.getRaceLength() + 1)) * (horse.getDistanceTravelled() + 1))) / 2.0 - 30;
-
+    
     if (xPosition < 0) {
       xPosition = 0;
     } 
@@ -208,7 +190,7 @@ public class GameWorld {
     Background.editPanel1(horseNumber);
     editPanel2(innerPanel2, "Choose horse color:");
     editPanel3(innerPanel3, "Choose horse type:");
-    innerPanel4.removeAll();
+    innerPanel4.removeAll(); 
     GridBagConstraints gbc4 = new GridBagConstraints();
     gbc4.gridx = 0;
     gbc4.gridy = 0;
@@ -217,7 +199,6 @@ public class GameWorld {
     innerPanel4.repaint();
   }
 
- 
   public static void editPanel2(JPanel panel, String labelMessage) {
     panel.removeAll();
     JLabel label = new JLabel(labelMessage);

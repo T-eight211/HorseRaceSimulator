@@ -30,7 +30,6 @@ public class Horse {
         fallen = false;
         setConfidence(horseConfidence); // Ensure confidence is within the valid range
     }
-
     // Other methods of class Horse
 
     /**
@@ -75,12 +74,10 @@ public class Horse {
     public String getType() {
         return type;
     }
-
     // getter for colour
     public String getColour() {
         return colour;
     }
-
     /**
      * Resets the horse to the start of the race.
      */
@@ -88,7 +85,6 @@ public class Horse {
         distanceTravelled = 0;
         fallen = false;
     }
-
     /**
      * Returns true if the horse has fallen, false otherwise.
      * 
@@ -113,8 +109,9 @@ public class Horse {
     public void setConfidence(double newConfidence) {
         if (newConfidence >= 0 && newConfidence <= 1) {
             confidence = newConfidence;
-        } 
+        }
     }
+
     /**
      * Sets the character used to represent the horse to the given character.
      * 
@@ -123,12 +120,14 @@ public class Horse {
     public void setType(String newType) {
         type = newType;
     }
-
+    // setter for colour
     public void setColour(String newColour) {
         colour = newColour;
     }
-
+    // setter for name
     public void setName(String newName) {
         name = newName;
-    }  
+    }
+
+    
 }

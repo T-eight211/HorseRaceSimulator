@@ -16,15 +16,16 @@ public class Race
     private List<Horse> horses;
     private  List<Horse> winners = new ArrayList<>();
     List<Horse> fallenHorses = new ArrayList<>();
-
     /**
      * Constructor for objects of class Race1
      * 
      * @param distance the length of the racetrack (in metres/yards...)
      */
-    public Race(int distance){
+    public Race(int distance)
+    {
         raceLength = distance;
-        horses = new ArrayList<>();     
+        horses = new ArrayList<>();
+        
     }
 
     // get winners
@@ -53,6 +54,8 @@ public class Race
     public List<Horse> getFallenHorses() {
         return fallenHorses;
     }
+
+
     
     /**
      * Start the race
@@ -60,19 +63,17 @@ public class Race
      * then repeatedly moved forward until the 
      * race is finished
      */
-    public void startRace()
-    {
+    public void startRace(){
 
         for (Horse horse : horses) {
             horse.goBackToStart();
-        }
-        boolean finished = false;
-        
-        while (!finished)
-        {
+        }   
+        boolean finished = false;      
+        while (!finished){
              
             for (Horse horse : horses) {
                 moveHorse(horse);
+
                 if (horse.hasFallen() && !fallenHorses.contains(horse)) {
                     fallenHorses.add(horse);
                 }
@@ -82,13 +83,12 @@ public class Race
                     winners.add(horse);
                     horse.setConfidence(Math.round((horse.getConfidence() + 0.1) * 10.0) / 10.0);
                 }
+
                 else if (fallenHorses.size() == horses.size()) {
-                    finished = true;
-                   
+                    finished = true;  
                 }
                 GameWorld.printRace(horse);
             }
-            
             // Wait for 100 milliseconds
             try {
                 TimeUnit.MILLISECONDS.sleep(1000);
@@ -97,9 +97,8 @@ public class Race
             }
             
         }
-     
     }
-  
+    
     /**
      * Randomly make a horse move forward or fall depending
      * on its confidence rating
@@ -117,6 +116,7 @@ public class Race
             
             if (Math.random() < (0.1 * theHorse.getConfidence() * theHorse.getConfidence())) {
                 theHorse.fall();
+                System.out.println(theHorse.getName() + " has fallen!");
                 theHorse.setConfidence(Math.round((theHorse.getConfidence() - 0.1) * 10.0) / 10.0);
             }
         }
@@ -128,8 +128,7 @@ public class Race
      * @param theHorse The horse we are testing
      * @return true if the horse has won, false otherwise.
      */
-    public boolean raceWonBy(Horse theHorse)
-    {
+    public boolean raceWonBy(Horse theHorse){
         return theHorse.getDistanceTravelled() >= raceLength;
     }
 
