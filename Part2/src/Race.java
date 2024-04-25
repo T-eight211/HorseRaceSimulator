@@ -116,7 +116,6 @@ public class Race
             
             if (Math.random() < (0.1 * theHorse.getConfidence() * theHorse.getConfidence())) {
                 theHorse.fall();
-                System.out.println(theHorse.getName() + " has fallen!");
                 theHorse.setConfidence(Math.round((theHorse.getConfidence() - 0.1) * 10.0) / 10.0);
             }
         }
